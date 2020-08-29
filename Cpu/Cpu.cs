@@ -10,14 +10,17 @@ namespace CoreBoy
     // This CPU is known as Sharp LR35902 and is similar to Intel 8080 and Zilog Z80.
     public class Cpu
     {
-        // Registers are grouped together. There are instructions that allow game to read and write 16 bits (2 bytes) of data.
-        // Use Hi or Lo to access specific register data.
+        // Registers are super fast memory cells located within the CPU. Each register (A, B, C, D, E, F, H, L) is 8-bit. 
+        // Because CPU instructions often groups registers together we'll group them together by default.
+        // These grouped registers allow instructions to read and write 16 bits (2 bytes) of data.
+        // Use Hi or Lo to access specific register data from a grouped register pair.
         // F - Flags Register. 7 = zero, 6 = subtract, 5 = half carry, 4 = carry
         public Register AF;
         public Register BC;
         public Register DE;
         public Register HL;
 
+        // Special 16-bit native registers
         public Register SP; // Stack Pointer - Gameboy CPU has built in support for stack-like data structure in memory. 'SP' points to where top of stack is.
         public UInt16 PC; // Program Counter - location of what byte is currently being executed
 
@@ -31,6 +34,7 @@ namespace CoreBoy
             HL = new Register();
             SP = new Register();
 
+            // set the initial state of the CPU
             PC = 0x100;
 
             BC.Set(0x0000);
