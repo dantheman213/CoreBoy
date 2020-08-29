@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// https://blog.ryanlevick.com/DMG-01/public/book/introduction.html
 namespace CoreBoy
 {
     // Emulate Gameboy 8-bit CPU 
