@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace CoreBoy
 {
+    // CPU Register
+    // A Register is responsible for holding on to a little piece of data that the overall CPU can manipulate as it executes instructions.
     public class Register
     {
         private UInt16 value;

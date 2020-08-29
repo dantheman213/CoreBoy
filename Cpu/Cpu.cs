@@ -4,17 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// https://blog.ryanlevick.com/DMG-01/public/book/introduction.html
 namespace CoreBoy
 {
+    // Emulate Gameboy 8-bit CPU 
+    // This CPU is known as Sharp LR35902 and is similar to Intel 8080 and Zilog Z80.
     public class Cpu
     {
+        // Registers are grouped together. There are instructions that allow game to read and write 16 bits (2 bytes) of data.
+        // Use Hi or Lo to access specific register data.
+        // F - Flags Register. 7 = zero, 6 = subtract, 5 = half carry, 4 = carry
         public Register AF;
         public Register BC;
         public Register DE;
         public Register HL;
 
-        public Register SP;
-        public UInt16 PC; // Program Counter
+        public Register SP; // Stack Pointer - Gameboy CPU has built in support for stack-like data structure in memory. 'SP' points to where top of stack is.
+        public UInt16 PC; // Program Counter - location of what byte is currently being executed
 
         public int Divider;
 
