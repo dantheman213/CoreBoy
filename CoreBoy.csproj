@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cpu\Cpu.cs" />
+    <Compile Include="Cpu\Instructions.cs" />
     <Compile Include="Cpu\Registers.cs" />
     <Compile Include="FrameMain.cs">
       <SubType>Form</SubType>
@@ -54,6 +57,7 @@
     <Compile Include="FrameMain.Designer.cs">
       <DependentUpon>FrameMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BitHelper.cs" />
     <Compile Include="Memory\MemoryBus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
