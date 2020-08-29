@@ -57,6 +57,8 @@
     <Compile Include="FrameMain.Designer.cs">
       <DependentUpon>FrameMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gameboy\Gameboy.cs" />
+    <Compile Include="Gpu\Gpu.cs" />
     <Compile Include="Helper\BitHelper.cs" />
     <Compile Include="Memory\MemoryBus.cs" />
     <Compile Include="Program.cs" />

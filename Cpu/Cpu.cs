@@ -94,5 +94,12 @@ namespace CoreBoy
             setFlag(4, on);
         }
 
+        private UInt16 popStack()
+        {
+            var sp = SP.HiLo();
+            // TODO
+
+            return 0;
+        }
     }
 }
