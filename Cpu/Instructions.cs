@@ -16,7 +16,16 @@ namespace CoreBoy
 
         public void Execute(byte opcode)
         {
+            switch (opcode)
+            {
+                case 0x00:
+                    // NOP
+                    break;
 
+                default:
+                    Console.WriteLine("UNKNOWN OPCODE: 0x{0}", opcode.ToString("X2"));
+                    break;
+            }
         }
     }
 }

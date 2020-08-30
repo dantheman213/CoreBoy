@@ -27,6 +27,13 @@ namespace CoreBoy
         public static UInt16 TMA = 0xFF06;
         public static UInt16 TAC = 0xFF07;
 
+        private Cartridge cartridge;
+
+        public MemoryBus(Cartridge c)
+        {
+            cartridge = c;
+        }
+
         public byte Read(UInt16 address)
         {
             if (address < 0x8000)
@@ -35,8 +42,7 @@ namespace CoreBoy
                 // 0 - 7FFF
                 // 32kb
 
-                // TODO
-                return 0;
+                return cartridge.Read(address);
             }
             else if (address < 0xA000)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace CoreBoy
             d.Filter = "Gameboy ROMs (*.gb)|*.gb|All files (*.*)|*.*";
             if (d.ShowDialog() == DialogResult.OK)
             {
-                var sys = new Gameboy(d.FileName);
+                var sys = new Gameboy(File.ReadAllBytes(d.FileName));
                 sys.Loop();
             }
         }

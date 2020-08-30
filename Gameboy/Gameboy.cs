@@ -24,6 +24,7 @@ namespace CoreBoy
 
     public class Gameboy
     {
+        public Cartridge Cartridge;
         public MemoryBus Bus;
         public Cpu Cpu;
         public Ppu Ppu;
@@ -34,10 +35,10 @@ namespace CoreBoy
 
         private int timerCounter;
 
-
-        public Gameboy(string romPath)
+        public Gameboy(byte[] rom)
         {
-            Bus = new MemoryBus();
+            Cartridge = new Cartridge(rom);
+            Bus = new MemoryBus(Cartridge);
             Cpu = new Cpu(Bus);
             Ppu = new Ppu();
 
