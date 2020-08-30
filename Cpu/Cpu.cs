@@ -147,16 +147,23 @@ namespace CoreBoy
             return (ushort)(byte1 | byte2);
         }
 
-        private byte popPC()
+        public byte PopPC8()
         {
             var opcode = Memory.Read(PC);
             PC += 1;
             return opcode;
         }
 
+        public UInt16 PopPC16()
+        {
+            var b1 = (UInt16)PopPC8();
+            var b2 = (UInt16)PopPC8();
+            return ((ushort)(b2 << 8 | b1));
+        }
+
         public int ExecuteNextOpcode()
         {
-            var opcode = popPC();
+            var opcode = PopPC8();
             Instructions.Execute(opcode);
             return 1; // TODO: CPU ticks
         }
