@@ -47,6 +47,10 @@ namespace CoreBoy
         // Current CPU multiplier (1x or 2x)
         private byte currentSpeed;
 
+        public bool InterruptsEnabling;
+        public bool InterruptsOn;
+        public bool Halted;
+
         public int Divider;
 
         public int ticks; 

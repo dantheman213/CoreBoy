@@ -309,10 +309,20 @@ namespace CoreBoy
                     // NOP
                     break;
 
+				case 0x3E:
+					// LD A,(nn)
+					var val = Cpu.PopPC8();
+					Cpu.AF.SetHi(val);
+					break;
                 case 0xC3:
                     // JMP nn
                     jump(Cpu.PopPC16());
                     break;
+
+				case 0xF3:
+					// DI
+					Cpu.InterruptsOn = true;
+					break;
 
                 default:
                     Console.WriteLine("UNKNOWN OPCODE: 0x{0} - {1}", opcode.ToString("X2"), instructionNameSet[opcode]);

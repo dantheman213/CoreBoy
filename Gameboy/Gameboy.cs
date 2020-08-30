@@ -38,6 +38,8 @@ namespace CoreBoy
         public Cpu Cpu;
         public Ppu Ppu;
 
+        public bool isGameboyColor;
+
         // TODO: Sound
 
         private bool isPaused;
