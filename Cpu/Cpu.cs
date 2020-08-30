@@ -42,9 +42,14 @@ namespace CoreBoy
         public Register SP;
 
         // Program Counter - location of what byte is currently being executed
-        public UInt16 PC; 
+        public UInt16 PC;
+
+        // Current CPU multiplier (1x or 2x)
+        private byte currentSpeed;
 
         public int Divider;
+
+        public int ticks; 
 
         private MemoryBus Memory;
         private Instructions Instructions;
@@ -164,8 +169,12 @@ namespace CoreBoy
         public int ExecuteNextOpcode()
         {
             var opcode = PopPC8();
-            Instructions.Execute(opcode);
-            return 1; // TODO: CPU ticks
+            return Instructions.Execute(opcode);
+        }
+
+        public int getSpeed()
+        {
+            return currentSpeed + 1;
         }
     }
 }

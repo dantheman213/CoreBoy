@@ -24,6 +24,15 @@ namespace CoreBoy
 
     public class Gameboy
     {
+        // The number of cycles the Gameboy CPU is capable of processing each second.
+        public const int ClockSpeed = 4194304;
+
+        // Frames per second for the display
+        public const int FramesPerSecond = 60;
+
+        // The number of CPU cycles in each frame
+        public const int CyclesPerFrame = ClockSpeed / FramesPerSecond;
+
         public Cartridge Cartridge;
         public MemoryBus Bus;
         public Cpu Cpu;
@@ -51,7 +60,13 @@ namespace CoreBoy
             // TODO
             while(true)
             {
+                // TODO: Calculate FPS?
+                // TODO: Get button state?
+                // TODO: Process button input states?
+
                 Update();
+                // TODO: Render display data to native screen
+
             }
         }
 
@@ -63,10 +78,25 @@ namespace CoreBoy
                 return 0;
             }
 
-            var cyclesOp = Cpu.ExecuteNextOpcode();
+            var cycles = 0;
+            while(cycles < CyclesPerFrame * Cpu.getSpeed())
+            {
+                var cyclesOp = 4;
+                // TODO: halted?
 
+                cyclesOp = Cpu.ExecuteNextOpcode();
 
-            return 1; // TODO: cycles
+                cycles += cyclesOp;
+                
+                // TODO: Update GFX
+                // TODO: Update Timers
+
+                // TODO: Interrupts?
+                // TODO: Sound?
+
+            }
+
+            return cycles;
         }
     }
 }
