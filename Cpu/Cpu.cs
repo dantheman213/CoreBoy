@@ -10,19 +10,39 @@ namespace CoreBoy
     // This CPU is known as Sharp LR35902 and is similar to Intel 8080 and Zilog Z80.
     public class Cpu
     {
-        // Registers are super fast memory cells located within the CPU. Each register (A, B, C, D, E, F, H, L) is 8-bit. 
+        // Registers are super fast memory cells located within the CPU. Each register (A, B, C, D, E, F, H, L) is 8-bit (contain 1 byte).
         // Because CPU instructions often groups registers together we'll group them together by default.
         // These grouped registers allow instructions to read and write 16 bits (2 bytes) of data.
-        // Use Hi or Lo to access specific register data from a grouped register pair.
-        // F - Flags Register. 7 = zero, 6 = subtract, 5 = half carry, 4 = carry
+        // Use Hi, Lo, HiLo to access specific register data from a grouped register pair.
+        //
+
+        // Register Pair AF
+        // Arithmitec operations take place on Register A and is arguably the most important register.
+        // Register F is paired with A and is named Flags Register. 
+        // 7 = zero, 6 = subtract, 5 = half carry, 4 = carry
         public Register AF;
+
+        // Register pair BC registers are generally used as counters during repetitive blocks of code such as moving data from one location to another.
         public Register BC;
+
+        // Registers pair DE are generally used together as a 16-bit register for holding a destination address in moving data from one address to another. 
+        // They can be used for other operations though, as much as the instructions will permit.
         public Register DE;
+
+        // Register pair HL
+        // Similar to BC and DE. Extensively used for indirect addressing.
+        // Only register pair that can be used indirectly in the instrutions ADC, ADD, AND, CP, DEC, INC, OR, SUB, and XOR.
         public Register HL;
 
         // Special 16-bit native registers
-        public Register SP; // Stack Pointer - Gameboy CPU has built in support for stack-like data structure in memory. 'SP' points to where top of stack is.
-        public UInt16 PC; // Program Counter - location of what byte is currently being executed
+        //
+
+        // Stack Pointer - Gameboy CPU has built in support for stack-like data structure in memory. 'SP' points to where top of stack is.
+        // Values from instructions PUSH, POP, CALL, and RET are placed or taken.
+        public Register SP;
+
+        // Program Counter - location of what byte is currently being executed
+        public UInt16 PC; 
 
         public int Divider;
 
@@ -63,16 +83,18 @@ namespace CoreBoy
             }
         }
 
+        // Get Zero flag
         public bool Z()
         {
             return (AF.HiLo() >> 7 & 1) == 1;
         }
-        
+       
         public void SetZ(bool on)
         {
             setFlag(7, on);
         }
 
+        // Get subtract flag
         public bool N()
         {
             return (AF.HiLo() >> 6 & 1) == 1;
@@ -83,6 +105,7 @@ namespace CoreBoy
             setFlag(6, on);
         }
 
+        // Get half carry flag
         public bool H()
         {
             return (AF.HiLo() >> 5 & 1) == 1;
@@ -93,6 +116,7 @@ namespace CoreBoy
             setFlag(5, on);
         }
 
+        // Get carry flag
         public bool C()
         {
             return (AF.HiLo() >> 4 & 1) == 1;
