@@ -26,8 +26,14 @@ namespace CoreBoy
 
         public int Divider;
 
-        public Cpu()
+        private MemoryBus Memory;
+        private Instructions Instructions;
+
+        public Cpu(MemoryBus m)
         {
+            Memory = m;
+            Instructions = new Instructions(this);
+
             AF = new Register();
             BC = new Register();
             DE = new Register();
@@ -97,12 +103,38 @@ namespace CoreBoy
             setFlag(4, on);
         }
 
+        // Push a 16 bit value onto the stack and decrement SP.
+        private void pushStack(UInt16 address)
+        {
+            var sp = SP.HiLo();
+            Memory.Write((ushort)(sp - 1), (byte)((address & 0xFF00) >> 8));
+            Memory.Write((ushort)(sp - 2), (byte)(address & 0xFF));
+            SP.Set((ushort)(SP.HiLo() - 2));
+        }
+
+        // Pop the next 16 bit value off the stack and increment SP.
         private UInt16 popStack()
         {
             var sp = SP.HiLo();
-            // TODO
+            var byte1 = Memory.Read(sp);
+            var byte2 = Memory.Read((ushort)(sp + 1 << 8));
+            SP.Set((ushort)(SP.HiLo() + 2));
 
-            return 0;
+            return (ushort)(byte1 | byte2);
+        }
+
+        private byte popPC()
+        {
+            var opcode = Memory.Read(PC);
+            PC += 1;
+            return opcode;
+        }
+
+        public int ExecuteNextOpcode()
+        {
+            var opcode = popPC();
+            Instructions.Execute(opcode);
+            return 1; // TODO: CPU ticks
         }
     }
 }

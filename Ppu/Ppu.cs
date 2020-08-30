@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoreBoy
 {
-    public class Gpu
+    public class Ppu
     {
         public const int ScreenWidth = 160;
         public const int ScreenHeight = 144;
@@ -22,11 +22,11 @@ namespace CoreBoy
         private byte[,,] PreparedData;
         private bool[,] bgPriority;
 
-        public Gpu()
+        public Ppu()
         {
-            screenData = new byte[Gpu.ScreenWidth, Gpu.ScreenHeight, 3];
-            screenData = new byte[Gpu.ScreenWidth, Gpu.ScreenHeight, 3];
-            bgPriority = new bool[Gpu.ScreenWidth, Gpu.ScreenHeight];
+            screenData = new byte[Ppu.ScreenWidth, Ppu.ScreenHeight, 3];
+            screenData = new byte[Ppu.ScreenWidth, Ppu.ScreenHeight, 3];
+            bgPriority = new bool[Ppu.ScreenWidth, Ppu.ScreenHeight];
         }
     }
 }

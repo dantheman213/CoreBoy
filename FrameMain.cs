@@ -19,7 +19,13 @@ namespace CoreBoy
 
         private void loadROMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var d = new OpenFileDialog();
+            d.Filter = "Gameboy ROMs (*.gb)|*.gb|All files (*.*)|*.*";
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                var sys = new Gameboy(d.FileName);
+                sys.Loop();
+            }
         }
     }
 }
