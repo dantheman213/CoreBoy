@@ -295,40 +295,46 @@ namespace CoreBoy
 			{ 0xCB, "CB!" },
 		};
 
-	private Cpu Cpu;
-        public Instructions(Cpu c)
+		private Cpu Cpu;
+		private MemoryBus Memory;
+        public Instructions(ref Cpu c, ref MemoryBus m)
         {
             Cpu = c;
+			Memory = m;
         }
 
         public int Execute(byte opcode)
         {
-            switch (opcode)
+			if (opcode == 0x00)
             {
-                case 0x00:
-                    // NOP
-                    break;
-
-				case 0x3E:
-					// LD A,(nn)
-					var val = Cpu.PopPC8();
-					Cpu.AF.SetHi(val);
-					break;
-                case 0xC3:
-                    // JMP nn
-                    jump(Cpu.PopPC16());
-                    break;
-
-				case 0xF3:
-					// DI
-					Cpu.InterruptsOn = true;
-					break;
-
-                default:
-                    Console.WriteLine("UNKNOWN OPCODE: 0x{0} - {1}", opcode.ToString("X2"), instructionNameSet[opcode]);
-                    throw new Exception();
+				// NOP
             }
-
+			else if(opcode == 0x3E)
+            {
+				// LD A,(nn)
+				var val = Cpu.PopPC8();
+				Cpu.AF.SetHi(val);
+			}
+			else if (opcode == 0xC3)
+			{
+				// JMP nn
+				jump(Cpu.PopPC16());
+			}
+			else if (opcode == 0xE0)
+			{
+				var val = 0xFF00 + (UInt16)Cpu.PopPC8();
+				Memory.Write((UInt16)val, Cpu.AF.Hi());
+			}
+			else if (opcode == 0xF3)
+            {
+				Cpu.InterruptsOn = true;
+            }
+			else
+            {
+				Console.WriteLine("UNKNOWN OPCODE: 0x{0} - {1}", opcode.ToString("X2"), instructionNameSet[opcode]);
+				throw new Exception();
+			}
+			
             return OpcodeCycles[opcode] * 4;
         }
 

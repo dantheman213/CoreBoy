@@ -36,6 +36,7 @@ namespace CoreBoy
         public Cartridge Cartridge;
         public MemoryBus Bus;
         public Cpu Cpu;
+        public Instructions Instructions;
         public Ppu Ppu;
 
         public bool isGameboyColor;
@@ -49,8 +50,10 @@ namespace CoreBoy
         public Gameboy(byte[] rom)
         {
             Cartridge = new Cartridge(rom);
-            Bus = new MemoryBus(Cartridge);
-            Cpu = new Cpu(Bus);
+            Bus = new MemoryBus(ref Cartridge);
+            Cpu = new Cpu(ref Bus);
+            Instructions = new Instructions(ref Cpu, ref Bus);
+            Cpu.SetInstructions(ref Instructions);
             Ppu = new Ppu();
 
             // TODO: APU / sound

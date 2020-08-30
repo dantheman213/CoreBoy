@@ -58,11 +58,10 @@ namespace CoreBoy
         private MemoryBus Memory;
         private Instructions Instructions;
 
-        public Cpu(MemoryBus m)
+        public Cpu(ref MemoryBus m)
         {
             Memory = m;
-            Instructions = new Instructions(this);
-
+        
             AF = new Register();
             BC = new Register();
             DE = new Register();
@@ -78,6 +77,11 @@ namespace CoreBoy
             SP.Set(0xFFFE);
 
             AF.SetMask(0xFFF0);
+        }
+
+        public void SetInstructions(ref Instructions i)
+        {
+            Instructions = i;
         }
 
         private void setFlag(byte index, bool on)

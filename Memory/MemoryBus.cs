@@ -29,7 +29,7 @@ namespace CoreBoy
 
         private Cartridge cartridge;
 
-        public MemoryBus(Cartridge c)
+        public MemoryBus(ref Cartridge c)
         {
             cartridge = c;
         }
