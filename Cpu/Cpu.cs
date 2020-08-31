@@ -186,6 +186,8 @@ namespace CoreBoy
             return currentSpeed + 1;
         }
 
+        // Perform XOR operation on two values and store result
+        // Update CPU flags with result of operation
         public void instXor(byte value1, byte value2)
         {
             var total = (byte)(value1 & value2);
@@ -194,6 +196,22 @@ namespace CoreBoy
             SetN(false);
             SetH(false);
             SetC(false);
+        }
+
+        // Perform CP operation on two values. Set flags from the results of the operation to F register
+        public void instCp(byte value1, byte value2)
+        {
+            var total = (byte)value2 - value1;
+            SetZ(total == 0);
+            SetN(true);
+            SetH((value1 & 0x0F) > (value2 & 0x0F));
+            SetC(value1 > value2);
+        }
+
+        // Perform a JUMP operation by setting PC to desired value
+        public void instJump(UInt16 loc)
+        {
+            PC = loc;
         }
     }
 }

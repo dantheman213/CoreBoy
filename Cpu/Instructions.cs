@@ -310,7 +310,46 @@ namespace CoreBoy
             {
 				// NOP
             }
-			else if(opcode == 0x3E)
+			else if (opcode == 0x06)
+            {
+				// LD B,n
+				Cpu.BC.SetHi(Cpu.PopPC8());
+            }
+			else if (opcode == 0x0E)
+            {
+				// LD C,n
+				Cpu.BC.SetLo(Cpu.PopPC8());
+            }
+			else if (opcode == 0x20)
+            {
+				// JR NZ,n
+				var next = (sbyte)Cpu.PopPC8();
+				if (Cpu.Z())
+                {
+					var addr = (Int32)Cpu.PC + (Int32)next;
+					Cpu.instJump((UInt16)addr);
+                }
+            }
+			else if (opcode == 0x21)
+            {
+				// LD HL,nn
+				var val = Cpu.PopPC16();
+				Cpu.HL.Set(val);
+            }
+			else if (opcode == 0x31)
+            {
+				// LD SP,nn
+				var val = Cpu.PopPC16();
+				Cpu.SP.Set(val);
+            }
+			else if (opcode == 0x32)
+            {
+				// LD (HL),A
+				var val = Cpu.HL.HiLo();
+				Memory.Write(val, Cpu.AF.Hi());
+				Cpu.HL.Set((UInt16)(Cpu.HL.HiLo() - 1));
+            }
+			else if (opcode == 0x3E)
             {
 				// LD A,(nn)
 				var val = Cpu.PopPC8();
@@ -331,6 +370,12 @@ namespace CoreBoy
 				var val = (UInt16)(0xFF00 + Cpu.PopPC8());
 				Memory.Write(val, Cpu.AF.Hi());
 			}
+			else if (opcode == 0xEA)
+            {
+				// LD (nn),A
+				var val = Cpu.AF.Hi();
+				Memory.Write(Cpu.PopPC16(), val);
+			}
 			else if (opcode == 0xF0)
             {
 				// LD A,(0xFF00+n)
@@ -340,6 +385,11 @@ namespace CoreBoy
 			else if (opcode == 0xF3)
             {
 				Cpu.InterruptsOn = false;
+            }
+			else if (opcode == 0xFE)
+            {
+				// CP A,#
+				Cpu.instCp(Cpu.PopPC8(), Cpu.AF.Hi());
             }
 			else
             {
