@@ -213,5 +213,26 @@ namespace CoreBoy
         {
             PC = loc;
         }
+
+        // Perform an DEC operation on a value and store the result using the set function.
+        // Will also update the CPU flags using the result of the operation.
+        public void instDec(Register r, byte org, int type)
+        {
+            var total = (byte)(org - 1);
+            if (type == Register.HI)
+            {
+                r.SetHi(total);
+            }
+            else if (type == Register.LO)
+            {
+                r.SetLo(total);
+            }
+
+            SetZ(total == 0);
+            SetN(true);
+            SetH((byte)(org & 0x0F) == 0);
+        }
+
+       
     }
 }

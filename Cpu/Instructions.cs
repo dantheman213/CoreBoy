@@ -310,16 +310,36 @@ namespace CoreBoy
             {
 				// NOP
             }
+			else if (opcode == 0x05)
+            {
+				// DEC B
+				Cpu.instDec(Cpu.BC, Cpu.BC.Hi(), Register.HI);
+            }
 			else if (opcode == 0x06)
             {
 				// LD B,n
 				Cpu.BC.SetHi(Cpu.PopPC8());
             }
+			else if (opcode == 0x0D)
+            {
+				// DEC C
+				Cpu.instDec(Cpu.BC, Cpu.BC.Lo(), Register.LO);
+			}
 			else if (opcode == 0x0E)
             {
 				// LD C,n
 				Cpu.BC.SetLo(Cpu.PopPC8());
             }
+			else if (opcode == 0x15)
+            {
+				// DEC D
+				Cpu.instDec(Cpu.DE, Cpu.BC.Hi(), Register.HI);
+			}
+			else if (opcode == 0x1D)
+			{
+				// DEC E
+				Cpu.instDec(Cpu.DE, Cpu.BC.Lo(), Register.LO);
+			}
 			else if (opcode == 0x20)
             {
 				// JR NZ,n
@@ -336,6 +356,16 @@ namespace CoreBoy
 				var val = Cpu.PopPC16();
 				Cpu.HL.Set(val);
             }
+			else if (opcode == 0x25)
+			{
+				// DEC H
+				Cpu.instDec(Cpu.HL, Cpu.HL.Hi(), Register.HI);
+			}
+			else if (opcode == 0x2D)
+			{
+				// DEC L
+				Cpu.instDec(Cpu.HL, Cpu.HL.Lo(), Register.LO);
+			}
 			else if (opcode == 0x31)
             {
 				// LD SP,nn
@@ -349,6 +379,12 @@ namespace CoreBoy
 				Memory.Write(val, Cpu.AF.Hi());
 				Cpu.HL.Set((UInt16)(Cpu.HL.HiLo() - 1));
             }
+			else if (opcode == 0x35)
+			{
+				// DEC (HL)
+				var addr = (UInt16)Cpu.HL.HiLo();
+				// TODO
+			}
 			else if (opcode == 0x3E)
             {
 				// LD A,(nn)

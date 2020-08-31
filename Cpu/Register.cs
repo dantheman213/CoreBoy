@@ -13,6 +13,9 @@ namespace CoreBoy
 
     public class Register
     {
+        public const int LO = 0;
+        public const int HI = 1;
+
         private UInt16 value;
         private UInt16 mask; // Only used for F
 

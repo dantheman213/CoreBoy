@@ -17,3 +17,7 @@ TODO
 * https://gbdev.io/pandocs/
 
 * https://gekkio.fi/files/gb-docs/gbctr.pdf
+
+* https://www.youtube.com/watch?v=ZEJVOH6Pxkg
+
+* https://mattbruv.github.io/gameboy-crust/
