@@ -39,19 +39,16 @@ namespace CoreBoy
         public Instructions Instructions;
         public Ppu Ppu;
 
-        public bool isGameboyColor;
-
         // TODO: Sound
 
         private bool isPaused;
-
-        private int timerCounter;
 
         public Gameboy(byte[] rom)
         {
             Cartridge = new Cartridge(rom);
             Bus = new MemoryBus(ref Cartridge);
             Cpu = new Cpu(ref Bus);
+            Bus.SetCpu(ref Cpu);
             Instructions = new Instructions(ref Cpu, ref Bus);
             Cpu.SetInstructions(ref Instructions);
             Ppu = new Ppu();

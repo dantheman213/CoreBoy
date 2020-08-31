@@ -45,7 +45,8 @@ namespace CoreBoy
         public UInt16 PC;
 
         // Current CPU multiplier (1x or 2x)
-        private byte currentSpeed;
+        public byte currentSpeed;
+        public bool prepareSpeed;
 
         public bool InterruptsEnabling;
         public bool InterruptsOn;
@@ -53,7 +54,7 @@ namespace CoreBoy
 
         public int Divider;
 
-        public int ticks; 
+        public int ticks;
 
         private MemoryBus Memory;
         private Instructions Instructions;
@@ -183,6 +184,16 @@ namespace CoreBoy
         public int getSpeed()
         {
             return currentSpeed + 1;
+        }
+
+        public void instXor(byte value1, byte value2)
+        {
+            var total = (byte)(value1 & value2);
+            AF.SetHi(total);
+            SetZ(total == 0);
+            SetN(false);
+            SetH(false);
+            SetC(false);
         }
     }
 }

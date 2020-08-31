@@ -51,9 +51,9 @@ namespace CoreBoy
             return rom;
         }
 
-        public int getMode()
+        public GameBoyTypeEnum getMode()
         {
-            return mode;
+            return (GameBoyTypeEnum)mode;
         }
 
         public string getTitle()

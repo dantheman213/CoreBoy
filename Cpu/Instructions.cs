@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -315,6 +316,11 @@ namespace CoreBoy
 				var val = Cpu.PopPC8();
 				Cpu.AF.SetHi(val);
 			}
+			else if (opcode == 0xAF)
+            {
+				// XOR A,A
+				Cpu.instXor(Cpu.AF.Hi(), Cpu.AF.Hi());
+            }
 			else if (opcode == 0xC3)
 			{
 				// JMP nn
@@ -322,12 +328,18 @@ namespace CoreBoy
 			}
 			else if (opcode == 0xE0)
 			{
-				var val = 0xFF00 + (UInt16)Cpu.PopPC8();
-				Memory.Write((UInt16)val, Cpu.AF.Hi());
+				var val = (UInt16)(0xFF00 + Cpu.PopPC8());
+				Memory.Write(val, Cpu.AF.Hi());
 			}
+			else if (opcode == 0xF0)
+            {
+				// LD A,(0xFF00+n)
+				var val = Memory.ReadHighRam((UInt16)(0xFF00 + (UInt16)Cpu.PopPC8()));
+				Cpu.AF.SetHi(val);
+            }
 			else if (opcode == 0xF3)
             {
-				Cpu.InterruptsOn = true;
+				Cpu.InterruptsOn = false;
             }
 			else
             {

@@ -52,6 +52,7 @@
     <Compile Include="Cpu\Cpu.cs" />
     <Compile Include="Cpu\Instructions.cs" />
     <Compile Include="Cpu\Register.cs" />
+    <Compile Include="Enums\GameBoyTypeEnum.cs" />
     <Compile Include="FrameMain.cs">
       <SubType>Form</SubType>
     </Compile>

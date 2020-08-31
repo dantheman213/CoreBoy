@@ -30,5 +30,16 @@ namespace CoreBoy
             b ^= (byte)(1 << bit);
             return b;
         }
+
+        // Transform a bool into a 1/0 byte
+        public static byte BoolToByte(bool val)
+        {
+            if (val)
+            {
+                return (byte)1;
+            }
+
+            return (byte)0;
+        }
     }
 }
