@@ -151,7 +151,7 @@ namespace CoreBoy
         }
 
         // Pop the next 16 bit value off the stack and increment SP.
-        private UInt16 popStack()
+        public UInt16 PopStack()
         {
             var sp = SP.HiLo();
             var byte1 = Memory.Read(sp);

@@ -320,6 +320,13 @@ namespace CoreBoy
 				// LD B,n
 				Cpu.BC.SetHi(Cpu.PopPC8());
             }
+			else if (opcode == 0x08)
+            {
+				// LD (nn),SP
+				var address = Cpu.PopPC16();
+				Memory.Write(address, Cpu.SP.Lo());
+				Memory.Write((ushort)(address + 1), Cpu.SP.Hi());
+            }
 			else if (opcode == 0x0D)
             {
 				// DEC C
@@ -330,10 +337,22 @@ namespace CoreBoy
 				// LD C,n
 				Cpu.BC.SetLo(Cpu.PopPC8());
             }
+			else if (opcode == 0x11)
+            {
+				// LD DE,nn
+				var val = Cpu.PopPC16();
+				Cpu.DE.Set(val);
+            }
 			else if (opcode == 0x15)
             {
 				// DEC D
 				Cpu.instDec(Cpu.DE, Cpu.BC.Hi(), Register.HI);
+			}
+			else if (opcode == 0x21)
+            {
+				// LD HL,nn
+				var val = Cpu.PopPC16();
+				Cpu.HL.Set(val);
 			}
 			else if (opcode == 0x1D)
 			{
@@ -418,9 +437,24 @@ namespace CoreBoy
 				var val = Memory.ReadHighRam((UInt16)(0xFF00 + (UInt16)Cpu.PopPC8()));
 				Cpu.AF.SetHi(val);
             }
+			else if (opcode == 0xF1)
+            {
+				// POP AF
+				Cpu.AF.Set(Cpu.PopStack());
+            }
 			else if (opcode == 0xF3)
             {
 				Cpu.InterruptsOn = false;
+            }
+			else if (opcode == 0xF8)
+            {
+				// LD HL,SP+n
+				// TODO
+			}
+			else if (opcode == 0xF9)
+            {
+				var val = Cpu.HL;
+				Cpu.SP = val;
             }
 			else if (opcode == 0xFE)
             {
